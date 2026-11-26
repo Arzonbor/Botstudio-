@@ -11,24 +11,8 @@ services:
       WORK_DIR: /data/jobs
     volumes:
       - jobs:/data
-    expose:
-      - "8080"
-
-  caddy:                       # https для адреса сервера рендера
-    image: caddy:2
-    restart: unless-stopped
-    depends_on: [render]
     ports:
-      - "80:80"
-      - "443:443"
-    environment:
-      DOMAIN: ${DOMAIN}
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
+      - "8080:8080"
 
 volumes:
   jobs:
-  caddy_data:
-  caddy_config:
