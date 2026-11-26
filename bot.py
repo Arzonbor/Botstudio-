@@ -361,6 +361,15 @@ async def run_remote(scene_json: Path, out_mp4: Path, preview: bool, total: int,
                         names[src] = f"{folder}/{len(names)}{Path(src).suffix}"
                         z.write(src, names[src])
                     ln[k] = names[src]
+                meta = ln.get("meta") or {}
+                if meta.get("faces"):
+                    new_faces = []
+                    for fp in meta["faces"]:
+                        if fp not in names:
+                            names[fp] = f"f/{len(names)}{Path(fp).suffix}"
+                            z.write(fp, names[fp])
+                        new_faces.append(names[fp])
+                    meta["faces"] = new_faces
         z.writestr("scene.json", json.dumps(scene, ensure_ascii=False))
     hdr = {"Authorization": f"Bearer {RENDER_TOKEN}"}
     timeout = aiohttp.ClientTimeout(total=None, sock_connect=30, sock_read=600)
