@@ -3,7 +3,7 @@ FROM python:3.12-slim-bookworm
 ENV PYTHONUNBUFFERED=1 DEBIAN_FRONTEND=noninteractive LIBGL_ALWAYS_SOFTWARE=1
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ffmpeg curl ca-certificates xz-utils xvfb procps \
+    ffmpeg curl ca-certificates xz-utils xvfb xauth procps \
     libgl1 libegl1 libgl1-mesa-dri libglu1-mesa libgbm1 libdrm2 \
     libx11-6 libxext6 libxi6 libxxf86vm1 libxfixes3 libxrender1 libxkbcommon0 libsm6 \
     && rm -rf /var/lib/apt/lists/*
