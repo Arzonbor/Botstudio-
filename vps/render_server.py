@@ -66,6 +66,9 @@ async def run_job(jid: str, preview: bool, total: int) -> None:
                     for k in ("audio", "image"):
                         if ln.get(k):
                             ln[k] = str(jdir / ln[k])
+                    meta = ln.get("meta") or {}
+                    if meta.get("faces"):
+                        meta["faces"] = [str(jdir / p) for p in meta["faces"]]
             (jdir / "scene_abs.json").write_text(json.dumps(scene, ensure_ascii=False))
             out = jdir / "result.mp4"
             cmd = [BLENDER_BIN, "-b", "-P", str(WORKER), "--",
