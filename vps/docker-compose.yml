@@ -1,0 +1,22 @@
+services:
+  render:
+    build:
+      context: ..
+      dockerfile: vps/Dockerfile
+    init: true
+    restart: unless-stopped
+    environment:
+      RENDER_TOKEN: ${RENDER_TOKEN}
+      MAX_RENDERS: ${MAX_RENDERS:-1}
+      WORK_DIR: /data/jobs
+      RENDER_W: ${RENDER_W:-1280}
+      RENDER_H: ${RENDER_H:-720}
+      RENDER_SAMPLES: ${RENDER_SAMPLES:-24}
+      RENDER_ENGINE: ${RENDER_ENGINE:-eevee}
+    volumes:
+      - jobs:/data
+    ports:
+      - "8080:8080"
+
+volumes:
+  jobs:
